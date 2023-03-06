@@ -1,5 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import init, { greet, greet2 } from '@wk3368/hello-wasm';
+
+init().then(() => {
+  greet('WebAssembly');
+  const temp = greet2('WebAssembly2');
+  console.log(temp);
+});
 
 function App() {
   return (
