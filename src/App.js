@@ -1,12 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
-import init, { greet, greet2 } from '@wk3368/hello-wasm';
+import init, { encrypt } from '@wk3368/rust-rsa-wasm-npm';
 
-init().then(() => {
-  greet('WebAssembly');
-  const temp = greet2('WebAssembly2');
-  console.log(temp);
-});
+function clickButton() {
+  const origin_str = JSON.stringify(
+    {
+      name: "text",
+      type: "input",
+      value: 1
+    }
+  );
+
+  init().then(() => {
+    const encrypted = encrypt(origin_str);
+    console.log({ origin_str, encrypted });
+    window.postMessage(
+      { type: "FROM_PAGE", text: encrypted }, "*"
+    );
+  });
+}
 
 function App() {
   return (
@@ -24,6 +36,9 @@ function App() {
         >
           Learn React
         </a>
+        <p>
+          <button id="EncryptButton" onClick={clickButton}>Encrypt</button>
+        </p>
       </header>
     </div>
   );
